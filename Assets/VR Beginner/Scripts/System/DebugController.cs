@@ -12,20 +12,21 @@ public class DebugController : MonoBehaviour
     public float CameraRotateSpeed = 180.0f;
     public Transform RigTransform;
     public Transform CameraPivotTransform;
-    
+
     Quaternion m_TargetRotation, m_TargetPivotRotation;
    CursorLockMode m_CursorLockMode = CursorLockMode.Locked;
    bool m_CursorVisible = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        if (XRDevice.isPresent && !Application.isEditor)
+
+        if (!Application.isEditor)
         {
             Destroy(this);
             return;
         }
-        
+
         Cursor.lockState = m_CursorLockMode;
         Cursor.visible = m_CursorVisible;
     }
@@ -39,18 +40,18 @@ public class DebugController : MonoBehaviour
         {
             anchor = hit.collider.GetComponentInParent<TeleportationAnchor>();
         }
-        
+
         if (Input.GetMouseButton(1) && anchor != null)
-        {//if the right button is pressed 
+        {//if the right button is pressed
             RigTransform.transform.position = anchor.transform.position;
         }
         else
         {
             UpdateLookRotation();
         }
-        
+
     }
-    
+
     void UpdateLookRotation()
     {
         var x = Input.GetAxis("Mouse Y");
